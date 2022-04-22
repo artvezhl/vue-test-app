@@ -1,34 +1,55 @@
 <template>
   <div class="app">
     <post-list :data="data" />
+    <pagination :pages="totalPages" :currentPage="currentPage" @changePage="changePage" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import PostList from "@/components/PostList";
+import Pagination from "@/components/Pagination";
 
 export default {
   name: 'App',
-  components: {PostList},
+  components: {PostList, Pagination},
   data() {
     return {
-      data: []
+      data: [],
+      currentPage: 1,
+      limit: 10,
+      totalPages: 0
     }
   },
   methods: {
     async fetchData() {
       try {
-        const resolve = await axios.get('https://api.unsplash.com/photos/?client_id=_00DLOXkS1ZxO4hzmo1kjwNgn0HCzsm7hdQ4-qrEjtc');
-        console.log('resolve is ', resolve.data);
-        this.data = resolve.data
+        const response = await axios.get('https://api.unsplash.com/photos', {
+          params: {
+            client_id: '_00DLOXkS1ZxO4hzmo1kjwNgn0HCzsm7hdQ4-qrEjtc',
+            page: this.currentPage
+          }
+        });
+        // this.totalPages = Math.ceil(response.headers['x-total'] / this.limit);
+        this.totalPages = Math.ceil(101 / this.limit);
+        console.log('resolve is ', response.data);
+        this.data = response.data
       } catch (e) {
         console.log('Error - ', e.message)
       }
     },
+    changePage(pageNumber) {
+      this.currentPage = pageNumber;
+      // this.fetchData();
+    }
   },
   mounted() {
     this.fetchData();
+  },
+  watch: {
+    currentPage() {
+      this.fetchData();
+    }
   }
 }
 </script>
