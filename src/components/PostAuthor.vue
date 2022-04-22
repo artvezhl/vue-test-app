@@ -1,9 +1,9 @@
 <template>
   <div class="author">
-    <img class="author__photo" :src="post.author_photo" alt="author photo">
+    <img class="author__photo" :src="user.profile_image.small" alt="author photo">
     <div class="author__name">
-      <b>{{post.author_name}}</b>
-      <p class="author__login">@{{post.author_login}}</p>
+      <b>{{user.name}}</b>
+      <p class="author__login">@{{user.username}}</p>
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    post: {
+    user: {
       type: Object,
       required: true
     }
@@ -38,6 +38,11 @@ export default {
 
 .author__login {
   color: #8D8D8D;
-;
+}
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+  .author {
+    padding: 10px 0;
+  }
 }
 </style>

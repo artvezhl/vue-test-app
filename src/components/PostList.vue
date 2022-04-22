@@ -1,6 +1,6 @@
 <template>
-  <div v-for="item in data">
-    <post-item :item="item" />
+  <div class="posts">
+    <post-item v-for="item in data" :key="item.id" :item="item" />
   </div>
 </template>
 
@@ -19,4 +19,13 @@ export default {
 </script>
 
 <style scoped>
+@media screen and (min-width: 768px) {
+  .posts {
+    width: 680px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    margin: 0 auto;
+  }
+}
 </style>

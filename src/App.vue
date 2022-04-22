@@ -1,10 +1,11 @@
 <template>
-  <div>
-    <post-list :data="mockData" />
+  <div class="app">
+    <post-list :data="data" />
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import PostList from "@/components/PostList";
 
 export default {
@@ -12,25 +13,22 @@ export default {
   components: {PostList},
   data() {
     return {
-      mockData: [
-        {id: 1, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 2, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 3, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 4, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 5, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 6, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 7, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-        {id: 8, image_name: 'image name', image_url: 'https://upload.wikimedia.org/wikipedia/commons/6/62/Starsinthesky.jpg', author_photo: 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png', author_name: '\n' +
-              'Jason Mowry', author_login: 'jason_mowry_photo', views: 43000},
-      ]
+      data: []
     }
+  },
+  methods: {
+    async fetchData() {
+      try {
+        const resolve = await axios.get('https://api.unsplash.com/photos/?client_id=_00DLOXkS1ZxO4hzmo1kjwNgn0HCzsm7hdQ4-qrEjtc');
+        console.log('resolve is ', resolve.data);
+        this.data = resolve.data
+      } catch (e) {
+        console.log('Error - ', e.message)
+      }
+    },
+  },
+  mounted() {
+    this.fetchData();
   }
 }
 </script>
@@ -44,5 +42,17 @@ export default {
   box-sizing: border-box;
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 12px;
+}
+
+@media screen and (min-width: 480px) {
+  .app {
+    padding: 0 20px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .app {
+    padding: 0 54px;
+  }
 }
 </style>

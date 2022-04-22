@@ -27,4 +27,10 @@ export default {
 .views__img {
   margin-left: 5px;
 }
+
+@media screen and (min-width: 768px) {
+  .views {
+    margin-right: 10px;
+  }
+}
 </style>
