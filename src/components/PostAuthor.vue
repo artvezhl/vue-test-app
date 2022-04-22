@@ -1,15 +1,23 @@
 <template>
   <div class="author">
-    <img class="author__photo" :src="user.profile_image.small" alt="author photo">
+    <my-link :url="user.links.html">
+      <img class="author__photo" :src="user.profile_image.small" alt="author photo">
+    </my-link>
     <div class="author__name">
-      <b>{{user.name}}</b>
-      <p class="author__login">@{{user.username}}</p>
+      <my-link :url="user.links.html">
+        <b>{{user.name}}</b>
+      </my-link>
+      <my-link :url="user.links.html">
+        <p class="author__login">@{{user.username}}</p>
+      </my-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  components: {},
+
   props: {
     user: {
       type: Object,
@@ -30,6 +38,7 @@ export default {
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .author__name {
