@@ -1,39 +1,42 @@
 <template>
-  <div class="pagination">
-    <div
-        class="page"
-        :class="{
-          'page_current': page === currentPage
-        }"
-        v-for="page in pages"
-        :key="page"
-        @click="changePage"
-    >{{ page }}</div>
-  </div>
+  <paginate
+      :page-count="pages"
+      :page-range="3"
+      :margin-pages="1"
+      :click-handler="changePage"
+      :container-class="'pagination'"
+      :page-class="'page'"
+  >
+  </paginate>
 </template>
 
 <script>
+import Paginate from "vuejs-paginate-next";
+
 export default {
+  components: {
+    paginate: Paginate,
+  },
   props: {
     pages: {
-      type: Number,
-      required: true
-    },
-    currentPage: {
       type: Number,
       required: true
     }
   },
   methods: {
     changePage(e) {
-      // console.log()
-      this.$emit('changePage', Number(e.target.innerHTML));
-    }
+      this.$emit('changePage', Number(e));
+    },
   }
 }
 </script>
 
-<style scoped>
+<style>
+
+li {
+  list-style: none;
+}
+
 .pagination {
   position: fixed;
   bottom: 0;
@@ -49,13 +52,13 @@ export default {
 .page {
   color: #8D8D8D;
   padding: 4px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 60px;
   cursor: pointer;
 }
 
-.page_current {
+.page.active > a{
   color: white;
-  font-size: 20px;
+  font-size: 30px;
 }
 </style>

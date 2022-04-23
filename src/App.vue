@@ -30,9 +30,7 @@ export default {
             page: this.currentPage
           }
         });
-        // this.totalPages = Math.ceil(response.headers['x-total'] / this.limit);
-        this.totalPages = Math.ceil(101 / this.limit);
-        console.log('resolve is ', response.data);
+        this.totalPages = Math.ceil(response.headers['x-total'] / this.limit);
         this.data = response.data
       } catch (e) {
         console.log('Error - ', e.message)
@@ -40,7 +38,6 @@ export default {
     },
     changePage(pageNumber) {
       this.currentPage = pageNumber;
-      // this.fetchData();
     }
   },
   mounted() {
